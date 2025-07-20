@@ -21,7 +21,7 @@ executor = ThreadPoolExecutor()
 
 class GenerateRequest(BaseModel):
     prompt: str
-    max_new_tokens: int = 256
+    max_new_tokens: int = 256 * 4
     do_sample: bool = False
 
 
@@ -39,10 +39,10 @@ async def generate(request: GenerateRequest):
         )
         for output in outputs:
             result = output.outputs[0].text
-            logging.info(f"-----Result-----\n{result}")
-            # logging.info(
-            #     f"\n-----Prompt-----\n{request.prompt}\n\n-----Result-----\n{result}"
-            # )
+            # logging.info(f"-----Result-----\n{result}")
+            logging.info(
+                f"-----Prompt-----\n{request.prompt}\n\n-----Result-----\n{result}"
+            )
             yield result
 
     loop = asyncio.get_event_loop()
